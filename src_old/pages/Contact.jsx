@@ -1,49 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSubmitStatus({ type: 'success', message: data.message });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setSubmitStatus({ type: 'error', message: data.message || 'Failed to send message.' });
-      }
-    } catch (error) {
-      console.error("Contact submission error:", error);
-      setSubmitStatus({ type: 'error', message: 'Network error. Make sure the backend is running.' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  // TODO: Add state for form, validation, etc.
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-background-dark text-slate-100 font-display antialiased">
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="text-primary">
+              <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+              </svg>
+            </div>
+            <h1 className="text-2xl font-extrabold tracking-tighter text-white">ART L</h1>
+          </div>
+          <nav className="hidden md:flex items-center gap-10">
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Home</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Gallery</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Downloads</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Order</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">About</a>
+            <a className="text-sm font-semibold text-primary" href="#">Contact</a>
+          </nav>
+          <div className="flex items-center gap-3">
+            <button className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+              <span className="material-symbols-outlined">person</span>
+            </button>
+            <button className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+              <span className="material-symbols-outlined">shopping_bag</span>
+            </button>
+          </div>
+        </div>
+      </header>
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-6 lg:px-20 py-16 lg:py-24">
@@ -52,7 +41,7 @@ const Contact = () => {
             <div className="space-y-12">
               <div className="space-y-4">
                 <span className="text-primary font-bold tracking-widest uppercase text-xs">Get in Touch</span>
-                <h2 className="text-5xl lg:text-7xl font-black text-white leading-none">
+                <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-none">
                   Let's Start a <br /><span className="text-primary">Conversation.</span>
                 </h2>
                 <p className="text-slate-600 dark:text-slate-400 text-lg max-w-md">
@@ -66,7 +55,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-slate-500 uppercase">Email Us</p>
-                    <a className="text-xl font-medium hover:text-primary transition-colors" href="mailto:lakruwankavinda689@gmail.com">lakruwankavinda689@gmail.com</a>
+                    <a className="text-xl font-medium hover:text-primary transition-colors" href="mailto:hello@artl-gallery.com">hello@artl-gallery.com</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -75,7 +64,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-slate-500 uppercase">Visit Our Gallery</p>
-                    <p className="text-xl font-medium">8/49 A, Arawatta, Mahiyanganaya, <br />Sri Lanka, 90712</p>
+                    <p className="text-xl font-medium">124 Art District, Manhattan<br />New York, NY 10011</p>
                   </div>
                 </div>
               </div>
@@ -99,27 +88,22 @@ const Contact = () => {
             </div>
             {/* Right Side: Contact Form */}
             <div className="bg-primary/5 p-8 lg:p-12 rounded-xl border border-primary/20">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-400">Your Full Name</label>
-                  <input required name="name" value={formData.name} onChange={handleChange} className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="John Doe" type="text" />
+                  <input className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="John Doe" type="text" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-400">Email Address</label>
-                  <input required name="email" value={formData.email} onChange={handleChange} className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="john@example.com" type="email" />
+                  <input className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="john@example.com" type="email" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-400">Message</label>
-                  <textarea required name="message" value={formData.message} onChange={handleChange} className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="Tell us how we can help you..." rows="5"></textarea>
+                  <textarea className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="Tell us how we can help you..." rows="5"></textarea>
                 </div>
-                <button disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-5 rounded-lg text-lg uppercase tracking-widest transition-all shadow-lg shadow-primary/20 disabled:opacity-70" type="submit">
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                <button className="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-5 rounded-lg text-lg uppercase tracking-widest transition-all shadow-lg shadow-primary/20" type="submit">
+                  Send Message
                 </button>
-                {submitStatus && (
-                  <div className={`p-4 rounded-xl text-center text-sm font-bold ${submitStatus.type === 'success' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
-                    {submitStatus.message}
-                  </div>
-                )}
               </form>
             </div>
           </div>
@@ -139,53 +123,21 @@ const Contact = () => {
         </section>
       </main>
       {/* Footer */}
-      <footer className="bg-background-dark border-t border-primary/10 px-6 lg:px-20 py-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center gap-3 text-primary mb-8">
-                <div className="size-6">
-                  <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
-                  </svg>
-                </div>
-                <h2 className="text-xl font-extrabold tracking-tight">ART L</h2>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-                A sanctuary for premium digital and physical art. Curating excellence for the modern collector and visionary creator.
-              </p>
+      <footer className="bg-background-light dark:bg-background-dark border-t border-primary/10 py-12 px-6 lg:px-20">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-3">
+            <div className="text-primary/50">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+              </svg>
             </div>
-            <div>
-              <h4 className="font-bold mb-8 text-primary uppercase text-[10px] tracking-[0.3em]">Resources</h4>
-              <ul className="space-y-4 text-sm">
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">Gallery Guide</a></li>
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">Download Terms</a></li>
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">License Types</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-8 text-primary uppercase text-[10px] tracking-[0.3em]">Company</h4>
-              <ul className="space-y-4 text-sm">
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">Our Vision</a></li>
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">Careers</a></li>
-                <li><a className="text-slate-500 hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-8 text-primary uppercase text-[10px] tracking-[0.3em]">Newsletter</h4>
-              <div className="flex flex-col gap-3">
-                <input className="bg-primary/5 border border-primary/20 rounded-xl px-5 py-3 text-sm focus:ring-2 focus:ring-primary/30 outline-none text-slate-200" placeholder="Email address" type="email" />
-                <button className="w-full py-3 bg-primary text-background-dark font-bold rounded-xl text-sm hover:bg-white transition-all">Subscribe</button>
-              </div>
-            </div>
+            <span className="text-xl font-bold tracking-tighter text-slate-500">ART L</span>
           </div>
-          <div className="pt-10 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em]">
-            <p>© 2024 ART L Collective. ALL RIGHTS RESERVED.</p>
-            <div className="flex gap-10">
-              <a className="hover:text-primary transition-colors" href="#">Instagram</a>
-              <a className="hover:text-primary transition-colors" href="#">Twitter</a>
-              <a className="hover:text-primary transition-colors" href="#">Dribbble</a>
-            </div>
+          <p className="text-sm text-slate-500">© 2024 ART L Gallery. All architectural rights reserved.</p>
+          <div className="flex gap-6">
+            <a className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors" href="#">Privacy</a>
+            <a className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors" href="#">Terms</a>
+            <a className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary transition-colors" href="#">Cookies</a>
           </div>
         </div>
       </footer>

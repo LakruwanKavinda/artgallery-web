@@ -1,80 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+
+import React from "react";
 
 const Order = () => {
-  const location = useLocation();
-  const artwork = location.state?.artwork;
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    artType: "Digital Art",
-    budget: "",
-    description: ""
-  });
-  const [file, setFile] = useState(null);
-
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
-
-  useEffect(() => {
-    if (artwork) {
-      setFormData((prev) => ({
-        ...prev,
-        description: `I would like to purchase the premium artwork: "${artwork.title}".\n\nAdditional notes: `
-      }));
-    }
-  }, [artwork]);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    
-    const formDataObj = new FormData();
-    formDataObj.append('name', formData.name);
-    formDataObj.append('email', formData.email);
-    formDataObj.append('artType', formData.artType);
-    if (formData.budget) formDataObj.append('budget', formData.budget);
-    formDataObj.append('description', formData.description);
-    if (file) {
-      formDataObj.append('referenceImage', file);
-    }
-
-    try {
-      const response = await fetch('/api/order', {
-        method: 'POST',
-        body: formDataObj
-      });
-      const data = await response.json();
-      
-      if (data.success) {
-        setSubmitStatus({ type: 'success', message: 'Order delivered to lakruwankavinda689@gmail.com successfully!' });
-        setFormData({ name: '', email: '', artType: 'Digital Art', budget: '', description: '' });
-        setFile(null);
-      } else {
-        setSubmitStatus({ type: 'error', message: data.message || 'Failed to send order.' });
-      }
-    } catch (error) {
-      console.error("Order submission error:", error);
-      setSubmitStatus({ type: 'error', message: 'Network error. Make sure the backend is running.' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+  // TODO: Add state for form, file upload, validation, etc.
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-display antialiased">
+      {/* Global Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
+          <div className="flex items-center gap-4 text-primary">
+            <div className="size-8">
+              <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+              </svg>
+            </div>
+            <h2 className="text-xl font-extrabold tracking-tight">ART L</h2>
+          </div>
+          <nav className="hidden lg:flex items-center gap-10">
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Home</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Gallery</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Downloads</a>
+            <a className="text-sm font-semibold text-primary" href="#">Order</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">About</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Contact</a>
+          </nav>
+          <div className="flex items-center gap-6">
+            <div className="hidden sm:flex items-center bg-primary/5 border border-primary/20 rounded-lg px-3 py-1.5">
+              <span className="material-symbols-outlined text-primary text-xl">search</span>
+              <input className="bg-transparent border-none focus:ring-0 text-sm w-32 xl:w-48 placeholder:text-primary/40" placeholder="Search assets..." type="text" />
+            </div>
+            <div className="size-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center overflow-hidden">
+              <img className="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGHKgzM_6iejk1IRB_YjXj1RAnpMFPrj-UqgxRC2zzKb5kuR-_X6AFt-Z07Er80xYVUV8mlv4zxLXxXHtoA6easKZAfHe-mZ3a50PNiWQr7TBke7kNbu6KMnaCr6hQxIbGCSrIspHXec_nVUfVFEVs94TS4Mz1v24OQDnZ81t3I6U5B9IabJR71oetjFs8peaj0DPa_NFzI1YU6VCqMR8eus6G_o9GfFGfgl1O1e3J0c4uYEuUQfN-gLWH2UNxtRzKr_8KBl5_6i0" alt="User profile avatar" />
+            </div>
+          </div>
+        </div>
+      </header>
       <main className="flex-1 max-w-7xl mx-auto w-full px-6 lg:px-20 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Side: Order Form */}
@@ -84,25 +44,25 @@ const Order = () => {
                 Order Custom <span className="text-primary">Artwork</span>
               </h1>
               <p className="text-slate-400 text-lg lg:text-xl max-w-2xl leading-relaxed">
-                Transform your vision into a unique masterpiece created by our elite artists. Fill out the details below to start your commission or purchase a premium piece.
+                Transform your vision into a unique masterpiece created by our elite artists. Fill out the details below to start your commission.
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="glass-panel rounded-3xl p-8 lg:p-10 space-y-8 shadow-2xl">
+            <form className="glass-panel rounded-3xl p-8 lg:p-10 space-y-8 shadow-2xl">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Full Name</label>
-                  <input required name="name" value={formData.name} onChange={handleChange} className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="John Doe" type="text" />
+                  <input className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="John Doe" type="text" />
                 </div>
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Email Address</label>
-                  <input required name="email" value={formData.email} onChange={handleChange} className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="john@example.com" type="email" />
+                  <input className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="john@example.com" type="email" />
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Art Type</label>
                   <div className="relative">
-                    <select name="artType" value={formData.artType} onChange={handleChange} className="w-full appearance-none bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 transition-all cursor-pointer outline-none">
+                    <select className="w-full appearance-none bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 transition-all cursor-pointer outline-none">
                       <option className="bg-background-dark">Digital Art</option>
                       <option className="bg-background-dark">Oil on Canvas</option>
                       <option className="bg-background-dark">Acrylic</option>
@@ -114,52 +74,28 @@ const Order = () => {
                 </div>
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Budget ($)</label>
-                  <input min="5" name="budget" value={formData.budget} onChange={handleChange} className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="Min $5" type="number" />
+                  <input className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 h-14 px-5 text-slate-100 placeholder:text-slate-600 transition-all outline-none" placeholder="Optional" type="number" />
                 </div>
               </div>
               <div className="space-y-3">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Project Description</label>
-                <textarea required name="description" value={formData.description} onChange={handleChange} className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 p-5 text-slate-100 placeholder:text-slate-600 transition-all resize-none outline-none" placeholder="Describe the theme, mood, and specific details you want in your artwork..." rows="5"></textarea>
+                <textarea className="w-full bg-primary/5 border border-primary/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 p-5 text-slate-100 placeholder:text-slate-600 transition-all resize-none outline-none" placeholder="Describe the theme, mood, and specific details you want in your artwork..." rows="5"></textarea>
               </div>
               <div className="space-y-3">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Reference Image</label>
-                <div className="relative border-2 border-dashed border-primary/20 hover:border-primary/50 transition-colors bg-primary/5 rounded-2xl p-10 flex flex-col items-center justify-center gap-4 cursor-pointer group">
-                  <input type="file" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/jpeg, application/pdf" />
-                  
-                  {file ? (
-                    <div className="flex flex-col items-center z-10 pointer-events-none">
-                      <div className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-primary">
-                        <span className="material-symbols-outlined text-3xl">task</span>
-                      </div>
-                      <p className="text-sm font-bold text-primary mt-4 text-center">Selected: {file.name}</p>
-                      <button 
-                        onClick={(e) => { e.preventDefault(); setFile(null); }} 
-                        className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2 hover:text-red-400 pointer-events-auto transition-colors"
-                      >
-                        Remove file
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center z-10 pointer-events-none">
-                      <div className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                        <span className="material-symbols-outlined text-3xl">cloud_upload</span>
-                      </div>
-                      <div className="text-center mt-4">
-                        <p className="text-sm font-bold text-slate-200">Drag and drop or click to upload</p>
-                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2">PNG, JPG or PDF up to 10MB</p>
-                      </div>
-                    </div>
-                  )}
+                <div className="border-2 border-dashed border-primary/20 hover:border-primary/50 transition-colors bg-primary/5 rounded-2xl p-10 flex flex-col items-center justify-center gap-4 cursor-pointer group">
+                  <div className="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-3xl">cloud_upload</span>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-slate-200">Drag and drop or click to upload</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2">PNG, JPG or PDF up to 10MB</p>
+                  </div>
                 </div>
               </div>
-              <button disabled={isSubmitting} className="w-full bg-primary hover:bg-white text-background-dark font-black py-5 rounded-xl shadow-xl shadow-primary/10 transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-sm disabled:opacity-70" type="submit">
-                {isSubmitting ? 'Sending Order...' : 'Submit Order'}
+              <button className="w-full bg-primary hover:bg-white text-background-dark font-black py-5 rounded-xl shadow-xl shadow-primary/10 transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-sm" type="submit">
+                Order Now
               </button>
-              {submitStatus && (
-                <div className={`p-4 rounded-xl text-center text-sm font-bold ${submitStatus.type === 'success' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
-                  {submitStatus.message}
-                </div>
-              )}
               <p className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-widest">By submitting, you agree to our Terms & Privacy Policy.</p>
             </form>
           </div>

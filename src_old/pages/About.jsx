@@ -1,9 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const About = () => {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-display antialiased">
+      {/* Global Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
+          <div className="flex items-center gap-4 text-primary">
+            <div className="size-8">
+              <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+              </svg>
+            </div>
+            <h2 className="text-xl font-extrabold tracking-tight">ART L</h2>
+          </div>
+          <nav className="hidden lg:flex items-center gap-10">
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Home</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Gallery</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Downloads</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Order</a>
+            <a className="text-sm font-semibold text-primary" href="#">About</a>
+            <a className="text-sm font-semibold hover:text-primary transition-colors" href="#">Contact</a>
+          </nav>
+          <div className="flex items-center gap-6">
+            <div className="hidden sm:flex items-center bg-primary/5 border border-primary/20 rounded-lg px-3 py-1.5">
+              <span className="material-symbols-outlined text-primary text-xl">search</span>
+              <input className="bg-transparent border-none focus:ring-0 text-sm w-32 xl:w-48 placeholder:text-primary/40" placeholder="Search assets..." type="text" />
+            </div>
+            <div className="size-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center overflow-hidden">
+              <img alt="User profile avatar" className="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGHKgzM_6iejk1IRB_YjXj1RAnpMFPrj-UqgxRC2zzKb5kuR-_X6AFt-Z07Er80xYVUV8mlv4zxLXxXHtoA6easKZAfHe-mZ3a50PNiWQr7TBke7kNbu6KMnaCr6hQxIbGCSrIspHXec_nVUfVFEVs94TS4Mz1v24OQDnZ81t3I6U5B9IabJR71oetjFs8peaj0DPa_NFzI1YU6VCqMR8eus6G_o9GfFGfgl1O1e3J0c4uYEuUQfN-gLWH2UNxtRzKr_8KBl5_6i0" />
+            </div>
+          </div>
+        </div>
+      </header>
       <main className="flex-1">
         {/* Modern Hero Section */}
         <section className="max-w-7xl mx-auto px-6 lg:px-20 py-16 lg:py-24 grid lg:grid-cols-2 gap-16 items-center">
@@ -17,9 +46,9 @@ const About = () => {
               ART L is a contemporary creator blending traditional techniques with modern narratives. Driven by passion and precision, every stroke tells a story of elegance, depth, and human connection. Based in London, ART L's work explores the boundaries between digital precision and tactile organic textures.
             </p>
             <div className="pt-4">
-              <a href="https://lakruwandissanayake4585.vercel.app/" target="_blank" rel="noopener noreferrer" className="inline-block bg-primary/5 border border-primary text-primary px-10 py-4 rounded-xl font-bold hover:bg-primary hover:text-background-dark transition-all shadow-lg shadow-primary/5 uppercase tracking-widest text-xs text-center border-t-0 border-b-0 border-l-0 border-r-0">
+              <button className="bg-primary/5 border border-primary text-primary px-10 py-4 rounded-xl font-bold hover:bg-primary hover:text-background-dark transition-all shadow-lg shadow-primary/5 uppercase tracking-widest text-xs">
                 View Portfolio
-              </a>
+              </button>
             </div>
           </div>
           <div className="order-1 lg:order-2">
@@ -198,9 +227,9 @@ const About = () => {
                   Looking for something unique? Let's collaborate on a custom artwork tailored to your style and space.
                 </p>
               </div>
-              <Link to="/order" className="bg-background-dark text-white hover:bg-black px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl transition-all shrink-0 hover:scale-105 active:scale-95 text-center">
+              <button className="bg-background-dark text-white hover:bg-black px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl transition-all shrink-0 hover:scale-105 active:scale-95">
                 Order Custom Artwork
-              </Link>
+              </button>
             </div>
           </div>
         </section>

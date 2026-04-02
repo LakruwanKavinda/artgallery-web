@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
@@ -16,6 +17,8 @@ const navLinks = [
 ];
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-background-dark text-slate-100">
@@ -32,7 +35,7 @@ function App() {
               <div className="text-lg font-extrabold">ART L</div>
             </div>
 
-            {/* Navigation */}
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-4 text-sm font-semibold">
               {navLinks.map((link) => (
                 <NavLink
@@ -51,7 +54,39 @@ function App() {
               ))}
             </nav>
 
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden text-primary p-2 focus:outline-none" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <span className="material-symbols-outlined text-3xl">
+                {isMobileMenuOpen ? 'close' : 'menu'}
+              </span>
+            </button>
+
           </div>
+
+          {/* Mobile Navigation Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden border-t border-primary/10 bg-background-dark/95 backdrop-blur-md px-4 py-4 space-y-2">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `block rounded-lg px-4 py-3 transition text-center font-semibold ${
+                      isActive
+                        ? 'bg-primary text-background-dark font-bold'
+                        : 'text-slate-300 hover:bg-white/5 hover:text-primary'
+                    }`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              ))}
+            </div>
+          )}
         </header>
 
         {/* Pages */}

@@ -26,7 +26,7 @@ const About = () => {
           <div className="order-1 lg:order-2">
             <div className="relative group">
               <div className="absolute -inset-1 bg-primary/20 rounded-[2rem] blur-2xl group-hover:bg-primary/30 transition duration-1000"></div>
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 glass-panel">
+              <div className="relative aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 glass-panel">
                 <img alt="Artist Portrait" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700 ease-in-out scale-105" src={abouthero} />
               </div>
             </div>

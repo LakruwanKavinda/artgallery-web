@@ -5,6 +5,7 @@ import Order from './pages/Order';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Checkout from './pages/Checkout';
+import logo1 from './assets/logo1.jpeg';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -25,7 +26,9 @@ function App() {
             
             {/* Logo */}
             <div className="flex items-center gap-2 text-primary">
-              <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=80&q=80" alt="ART L logo" className="h-8 w-8 rounded-full border border-primary/40 object-cover" />
+            <div className="h-8 w-8 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
+              <img src={logo1} alt="ART L logo" className="h-full w-full object-cover scale-[1.3]" />
+            </div>
               <div className="text-lg font-extrabold">ART L</div>
             </div>
 

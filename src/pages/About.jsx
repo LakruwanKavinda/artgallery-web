@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import abouthero from "../assets/abouthero.jpg";
 
 const About = () => {
   return (
@@ -26,7 +27,7 @@ const About = () => {
             <div className="relative group">
               <div className="absolute -inset-1 bg-primary/20 rounded-[2rem] blur-2xl group-hover:bg-primary/30 transition duration-1000"></div>
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 glass-panel">
-                <img alt="Artist Portrait" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700 ease-in-out scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbJwkdYTAzhgAWZbiGO08M0LLMfIehFu58SeZujrdEOkzzPLrg5Ra2mAjY4MzX9rI1BGGueBIiR9mNbCm71bRwSh_ka-3GxkAUHMiSmUGyVJJzdXxuQ8laGR0Yi-ddjVswseOwCt-m5DW-Kh7EUlLT-QUgdZE-Nrn7oBa0OGUTq6K2BupV3EBdok5rXzkOjnbfoPyeVi7nOJkwD3iLQbYh28pu9G2LI0ZHLJwDlFntUUppdpxhodT-AZBV5B-oYFn0o5ZgD_GGwKg" />
+                <img alt="Artist Portrait" className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700 ease-in-out scale-105" src={abouthero} />
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import orderhero4 from "../assets/orderhero4.jpg";
 
 const Order = () => {
   const location = useLocation();
@@ -167,7 +168,7 @@ const Order = () => {
           <div className="sticky top-32 space-y-12 hidden lg:block">
             <div className="group relative">
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/5">
-                <img alt="Digital portrait preview" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD04HjU_EAKv3T_gU9sugBuUAI2zHNSDlS_F3CHxk5XdDyu2qilazRxsHYlKQ6jYvf0GuEqYIEJO7kIR67DhRoIAU7feUbCWQqesD1n2v-PtMyQcJwS7jzMODfJan8q3xiuCU_RrUZeKV1u0H4uvZMFU6bFZ0-ZmQ9aaPhWEuvgY7sh2GZPFvJMjqaRmSEvRw8vmNv9yX0KZJ0AQs-Gd9heqqnyZqRZCcn6PkGYxQ1sWuFnJo2rgo6WAnjFLwYdEhJJOychQ8pz8FE" />
+                <img alt="Digital portrait preview" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src={orderhero4} />
                 <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
                 <div className="absolute bottom-0 left-0 p-10">
                   <span className="glass-panel text-primary text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em]">Example Piece</span>

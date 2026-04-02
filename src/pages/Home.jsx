@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import homehero1 from "../assets/homehero1.jpg";
+import auth1 from "../assets/auth1.jpg";
 
 // Reusable UI components would be imported here (Navbar, Footer, ArtCard, etc.)
 // For now, static JSX is used. Modularize as needed.
@@ -35,7 +37,7 @@ const Home = () => {
             </div>
             <div className="relative group">
               <div className="absolute -inset-1 bg-primary/20 rounded-2xl blur-2xl group-hover:bg-primary/30 transition duration-1000"></div>
-              <div className="relative aspect-[4/5] rounded-2xl bg-cover bg-center overflow-hidden border border-white/10 shadow-2xl" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCd7DOkZDNxHG4ssxjQ3mcs7_XnRKAqDM_OFjlgMKV1VaB5ywkCo79ehpIi7j-EuMdT9MvAZTenpZ17Qgg1cSd_YXlMcRDELxtWUafNVuZo-PLqaJmblhCWcS0twb3cN1S3jSnij79tROkojBDcs5WeGvCqzKhCeHSROL5qSQD2UVMiN7Ht4U1REneE2TZsoVzQu6UJH7ZZNeiY0nYfW9GEfS2N8v57xUTMqTq9t4fQ0n69P39h9qlmS1uYpjuYPeUNeYBXnpP6aQQ")'}}></div>
+              <div className="relative aspect-[4/5] rounded-2xl bg-cover bg-center overflow-hidden border border-white/10 shadow-2xl" style={{backgroundImage: `url(${homehero1})`}}></div>
             </div>
           </div>
         </section>
@@ -124,7 +126,7 @@ const Home = () => {
               <div className="relative">
                 <div className="absolute -top-4 -left-4 size-32 border-t-2 border-l-2 border-primary"></div>
                 <div className="absolute -bottom-4 -right-4 size-32 border-b-2 border-r-2 border-primary"></div>
-                <img alt="" className="rounded-lg relative z-10 w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDatRsh-7MQRmZmyfyRisqSyjCVd2PEYfnPEgNaATTRbtKWelrzO5rLVIudbXFmyiBCuVlHSae2rBlFqICDKRAC0Vv80Qv0GxWKU0gdEelqTT-pbOrFSO-23gbpenmnGqRwGVYTI2VdFecDVeShznBk7HTtz5HdbdhH_d_dcvWwrLWW1Dgv289JBDK6IcDGK3bqKzhvzsx2DwRGfOZEvJCZrqUwuvGeGu5vy0xTr_wFUOiL8Q-tC_IKQXqFxqd0xTUqF7GQyCWiS9w" />
+                <img alt="" className="rounded-lg relative z-10 w-full h-[500px] object-cover object-[center_20%] grayscale hover:grayscale-0 transition-all duration-700" src={auth1} />
               </div>
             </div>
             <div className="order-1 lg:order-2 flex flex-col gap-6">

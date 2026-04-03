@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 import orderhero4 from "../assets/orderhero4.jpg";
 
 const Order = () => {
+  const formRef = React.useRef();
   const location = useLocation();
   const artwork = location.state?.artwork;
 
@@ -41,34 +43,25 @@ const Order = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
-    
-    const formDataObj = new FormData();
-    formDataObj.append('name', formData.name);
-    formDataObj.append('email', formData.email);
-    formDataObj.append('artType', formData.artType);
-    if (formData.budget) formDataObj.append('budget', formData.budget);
-    formDataObj.append('description', formData.description);
-    if (file) {
-      formDataObj.append('referenceImage', file);
-    }
-
     try {
-      const response = await fetch('/api/order', {
-        method: 'POST',
-        body: formDataObj
-      });
-      const data = await response.json();
+      // Load securely from Vite's environment variables (.env)
+      const SERVICE_ID = import.meta.env.VITE_SERVICE_ID; 
+      const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
+      const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+
+      // EmailJS handles standard FormData attachments natively if configured in their dashboard
+      const response = await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
       
-      if (data.success) {
+      if (response.status === 200) {
         setSubmitStatus({ type: 'success', message: 'Order delivered to lakruwankavinda689@gmail.com successfully!' });
         setFormData({ name: '', email: '', artType: 'Digital Art', budget: '', description: '' });
         setFile(null);
       } else {
-        setSubmitStatus({ type: 'error', message: data.message || 'Failed to send order.' });
+        setSubmitStatus({ type: 'error', message: 'Failed to send order via EmailJS.' });
       }
     } catch (error) {
       console.error("Order submission error:", error);
-      setSubmitStatus({ type: 'error', message: 'Network error. Make sure the backend is running.' });
+      setSubmitStatus({ type: 'error', message: 'Network error or Invalid EmailJS credentials.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -88,7 +81,7 @@ const Order = () => {
                 Transform your vision into a unique masterpiece created by our elite artists. Fill out the details below to start your commission or purchase a premium piece.
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="glass-panel rounded-3xl p-8 lg:p-10 space-y-8 shadow-2xl">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-panel rounded-3xl p-8 lg:p-10 space-y-8 shadow-2xl">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80 ml-1">Full Name</label>

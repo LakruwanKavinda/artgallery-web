@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  const formRef = React.useRef();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,28 +18,23 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus(null);
-
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      // Load securely from Vite's environment variables (.env)
+      const SERVICE_ID = import.meta.env.VITE_SERVICE_ID; 
+      const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
+      const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
 
-      const data = await response.json();
+      const response = await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
 
-      if (data.success) {
-        setSubmitStatus({ type: 'success', message: data.message });
+      if (response.status === 200) {
+        setSubmitStatus({ type: 'success', message: 'Message delivered to lakruwankavinda689@gmail.com successfully!' });
         setFormData({ name: '', email: '', message: '' });
       } else {
-        setSubmitStatus({ type: 'error', message: data.message || 'Failed to send message.' });
+        setSubmitStatus({ type: 'error', message: 'Failed to send message via EmailJS.' });
       }
     } catch (error) {
-      console.error("Contact submission error:", error);
-      setSubmitStatus({ type: 'error', message: 'Network error. Make sure the backend is running.' });
+      console.error("EmailJS submission error:", error);
+      setSubmitStatus({ type: 'error', message: 'Network error or Invalid EmailJS credentials.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -99,7 +96,7 @@ const Contact = () => {
             </div>
             {/* Right Side: Contact Form */}
             <div className="bg-primary/5 p-8 lg:p-12 rounded-xl border border-primary/20">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-400">Your Full Name</label>
                   <input required name="name" value={formData.name} onChange={handleChange} className="w-full bg-background-dark/50 border-primary/20 rounded-lg focus:ring-primary focus:border-primary py-4 px-6 text-white placeholder-slate-600 transition-all" placeholder="John Doe" type="text" />
